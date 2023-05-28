@@ -7,13 +7,13 @@ module.exports = app => {
     router.post("/", records.create);
   
     // Retrieve all records
-//    router.get("/", records.findAll);
+  //  router.get("/", records.findAll);
   
     // Retrieve all published records
 //    router.get("/published", records.findAllPublished);
   
     // Retrieve a single record with id
-    router.get("/:stu_num", records.findOne);
+    router.get("/", records.findOne);
   
     // Update a record with id
     router.put("/:id", records.update);
@@ -21,7 +21,9 @@ module.exports = app => {
     // Delete a record with id
     router.delete("/:id", records.delete);
 
-  
+    //Login auth
+    router.post("/login", records.login)
+
     // Delete all records
   //  router.delete("/", records.deleteAll);
   

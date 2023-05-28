@@ -79,28 +79,37 @@ exports.findOne = (req, res) => {
   };
 */
 
-// Find a single Record with student number 
 exports.findOne = (req, res) => {
-    const currNum = req.params.stu_num;
-    Record.findOne({ stu_num: currNum })
+  const currNum = req.body.stu_num;
+
+  if (!currNum) {
+    res.status(400).send({
+      message: "Missing student number in the request body."
+    });
+    return;
+  }
+
+  Record.findOne({ where: { stu_num: currNum } })
     .then(data => {
-        if (data) {
-          res.send({
-            message: "Account " + currNum + " logged in successfully!",
-            data: data
+      if (data) {
+        res.send({
+          message: "Account " + currNum + " logged in successfully!",
+          data: data
         });
-        } else {
-          res.status(404).send({
-            message: `Cannot find Record with student number=${currNum}.`
-          });
-        }
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Error retrieving Record with student number=" + currNum
+      } else {
+        res.status(404).send({
+          message: `Cannot find Record with student number=${currNum}.`
         });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving Record with student number=" + currNum
       });
-  };
+    });
+};
+
+
 
 // Update a Record by the id in the request
 exports.update = (req, res) => {
@@ -185,3 +194,34 @@ exports.findAllPublished = (req, res) => {
   };
 
 */
+
+// Find a single Record with student number and password
+exports.login = async (req, res) => {
+  const currNum = req.body.stu_num;
+  const password = req.body.password;
+  console.log("currNum:", currNum);
+  console.log("password:", password);
+
+  try {
+    const currrecord = await Record.findOne({ where: { stu_num: currNum } });
+
+    if (currrecord && currrecord.password === password) {
+      res.send({
+        message: "Account logged in successfully",
+        data: currrecord
+      });
+    } else {
+      res.status(401).send({
+        message: "Invalid student number or password"
+      });
+    }
+  } catch (err) {
+    res.status(500).send({
+      message: "Error retrieving record with student number: " + currNum
+    });
+  }
+};
+
+
+
+
