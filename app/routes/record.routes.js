@@ -13,7 +13,7 @@ module.exports = app => {
 //    router.get("/published", records.findAllPublished);
   
     // Retrieve a single record with id
-    router.get("/", records.findOne);
+    router.get("/:stu_num", records.findOne);
   
     // Update a record with id
     router.put("/:id", records.update);

@@ -207,7 +207,7 @@ exports.login = async (req, res) => {
 
     if (currrecord && currrecord.password === password) {
       res.send({
-        message: "Account logged in successfully",
+   //     message: "Account logged in successfully",
         data: currrecord
       });
     } else {

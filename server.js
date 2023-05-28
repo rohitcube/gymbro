@@ -5,12 +5,17 @@ console.log("bruh");
 
 const app = express();
 
+app.use(cors());
+/*
 var corsOptions = {
-  origin: "http://localhost:3031"
+  origin: "http://localhost:3000"
 };
+app.use(cors({
+  origin: "http://localhost:3031"
+}));
 
 app.use(cors(corsOptions));
-
+*/
 // parse requests of content-type - application/json
 app.use(express.json());
 
